@@ -1,0 +1,13 @@
+pipeline:
+  build:
+    image: postgres
+    commands:
+      - until psql -U root -d test -h postgres -c "select 1" > /dev/null 2>&1; do sleep 5; done
+      - psql -U root -d test -h postgres -c "SELECT current_date;"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_DB=test
